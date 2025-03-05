@@ -52,8 +52,8 @@ const Register = () => {
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96 mt-16">
-        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
+      <div className="bg-white p-8 rounded-lg shadow-md w-96 mt-20">
+        <h1 className="text-2xl font-bold mb-3 text-center">Register</h1>
         <form onSubmit={handleRegister}>
           <div className="mb-2">
             <label className="block text-sm font-medium mb-2">Name</label>
@@ -104,7 +104,7 @@ const Register = () => {
             Register
           </button>
         </form>
-        <div className="mt-4 text-center">
+        <div className="mt-2 text-center">
           <Link to="/login" className="text-blue-500 hover:underline">
             Already have an account? Login
           </Link>
