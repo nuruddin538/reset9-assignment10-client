@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase.config";
 import { useState } from "react";
 import visaLogo from "../assets/visa-logo.jpg";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
@@ -47,36 +48,27 @@ const Navbar = () => {
               onClick={toggleMenu}
               className="text-gray-800 hover:text-blue-500 focus:outline-none"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16m-7 6h7"
-                ></path>
-              </svg>
+              <RxHamburgerMenu />
             </button>
           </div>
           {/* Navigation Links */}
           <div className="hidden md:flex space-x-8 items-center">
             <Link
               to="/"
-              className={`text-gray-800 hover:text-blue-500 ${
-                location.pathname === "/" ? "font-bold underline" : ""
+              className={`text-gray-800 ${
+                location.pathname === "/"
+                  ? "font-bold btn btn-primary text-white"
+                  : ""
               }`}
             >
               Home
             </Link>
             <Link
               to="/all-visas"
-              className={`text-gray-800 hover:text-blue-500 ${
-                location.pathname === "/all-visas" ? "font-bold underline" : ""
+              className={`text-gray-800 ${
+                location.pathname === "/all-visas"
+                  ? "font-bold btn btn-primary text-white"
+                  : ""
               }`}
             >
               All Visas
@@ -85,9 +77,9 @@ const Navbar = () => {
               <>
                 <Link
                   to="/add-visa"
-                  className={`text-gray-800 hover:text-blue-500 ${
+                  className={`text-gray-800 ${
                     location.pathname === "/add-visa"
-                      ? "font-bold underline"
+                      ? "font-bold btn btn-primary text-white"
                       : ""
                   }`}
                 >
@@ -95,9 +87,9 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/my-added-visas"
-                  className={`text-gray-800 hover:text-blue-500 ${
+                  className={`text-gray-800 ${
                     location.pathname === "/my-added-visas"
-                      ? "font-bold underline"
+                      ? "font-bold btn btn-primary text-white"
                       : ""
                   }`}
                 >
@@ -105,9 +97,9 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/my-visa-application"
-                  className={`text-gray-800 hover:text-blue-500 ${
-                    location.pathname === "/my-visa-applications"
-                      ? "font-bold underline"
+                  className={`text-gray-800 ${
+                    location.pathname === "/my-visa-application"
+                      ? "font-bold btn btn-primary text-white"
                       : ""
                   }`}
                 >
@@ -139,9 +131,6 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="text-gray-800 hover:text-blue-500">
-                  Login
-                </Link>
                 <Link
                   to="/register"
                   className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -155,20 +144,22 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="flex flex-col space-y-4 mt-4">
+            <div className="flex flex-col justify-center items-center py-2 space-y-4 mt-4">
               <Link
                 to="/"
-                className={`text-gray-800 hover:text-blue-500 ${
-                  location.pathname === "/" ? "font-bold underline" : ""
+                className={`text-gray-800 ${
+                  location.pathname === "/"
+                    ? "font-bold btn btn-primary text-white"
+                    : ""
                 }`}
               >
                 Home
               </Link>
               <Link
                 to="/all-visas"
-                className={`text-gray-800 hover:text-blue-500 ${
+                className={`text-gray-800 ${
                   location.pathname === "/all-visas"
-                    ? "font-bold underline"
+                    ? "font-bold btn btn-primary text-white"
                     : ""
                 }`}
               >
@@ -178,9 +169,9 @@ const Navbar = () => {
                 <>
                   <Link
                     to="/add-visa"
-                    className={`text-gray-800 hover:text-blue-500 ${
+                    className={`text-gray-800 ${
                       location.pathname === "/add-visa"
-                        ? "font-bold underline"
+                        ? "font-bold btn btn-primary text-white"
                         : ""
                     }`}
                   >
@@ -188,19 +179,19 @@ const Navbar = () => {
                   </Link>
                   <Link
                     to="/my-added-visas"
-                    className={`text-gray-800 hover:text-blue-500 ${
+                    className={`text-gray-800 ${
                       location.pathname === "/my-added-visas"
-                        ? "font-bold underline"
+                        ? "font-bold btn btn-primary text-white"
                         : ""
                     }`}
                   >
                     My Added Visas
                   </Link>
                   <Link
-                    to="/my-visa-applications"
-                    className={`text-gray-800 hover:text-blue-500 ${
-                      location.pathname === "/my-visa-applications"
-                        ? "font-bold underline"
+                    to="/my-visa-application"
+                    className={`text-gray-800 ${
+                      location.pathname === "/my-visa-application"
+                        ? "font-bold btn btn-primary text-white"
                         : ""
                     }`}
                   >
@@ -218,7 +209,7 @@ const Navbar = () => {
                     />
                     <button
                       onClick={handleLogout}
-                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                      className="bg-red-500 cursor-pointer text-white px-4 py-2 rounded hover:bg-red-600"
                     >
                       Logout
                     </button>
@@ -226,12 +217,6 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Link
-                    to="/login"
-                    className="text-gray-800 hover:text-blue-500"
-                  >
-                    Login
-                  </Link>
                   <Link
                     to="/register"
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
