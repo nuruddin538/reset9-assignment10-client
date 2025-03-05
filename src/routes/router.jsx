@@ -7,11 +7,13 @@ import AllVisa from "../pages/AllVisa";
 import AddVisa from "../pages/AddVisa";
 import MyAddVisa from "../pages/MyAddVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
+import NotFound from "../pages/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayout></HomeLayout>,
+    errorElement: <NotFound />,
     children: [
       {
         path: "",
