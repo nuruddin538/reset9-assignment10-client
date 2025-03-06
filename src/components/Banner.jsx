@@ -13,7 +13,7 @@ const Banner = ({ bgImage }) => {
         className="absolute inset-0 bg-black opacity-50"
         aria-hidden="true"
       ></div>
-      <div className="text-center relative z-10">
+      <div className="text-center relative z-5">
         <h1 className="text-2xl md:text-4xl font-bold mb-4">
           {bgImage.includes("banner1") && "Welcome to VisaPortal"}
           {bgImage.includes("banner2") && "Explore All Visas"}
