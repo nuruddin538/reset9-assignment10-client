@@ -1,46 +1,69 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const AddVisa = () => {
-  const [formData, setFormData] = useState({
-    countryImage: "",
-    countryName: "",
-    visaType: "",
-    processingTime: "",
-    requiredDocuments: [],
-    description: "",
-    ageRestriction: "",
-    fee: "",
-    validity: "",
-    applicationMethod: "",
-  });
-  const navigate = useNavigate();
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === "checkbox") {
-      const updatedDocuments = checked
-        ? [...formData.requiredDocuments, value]
-        : formData.requiredDocuments.filter((doc) => doc !== value);
-      setFormData({ ...formData, requiredDocuments: updatedDocuments });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-  const handleSubmit = async (e) => {
+  const [selectedDocuments, setSelectedDocuments] = useState([]);
+
+  const handleAddVisa = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/visas", formData);
-      toast.success("Visa added successfully!");
-      navigate("/all-visas");
-    } catch (error) {
-      toast.error("Failed to add visa.");
+
+    const formData = new FormData(e.target);
+    // const countryImage = e.target.countryImage.value;
+    // const countryName = e.target.countryName.value;
+    // const visaType = e.target.visaType.value;
+    // const processingTime = e.target.processingTime.value;
+    // const requiredDocuments = e.target.requiredDocuments.value;
+    // const description = e.target.description.value;
+    // const ageRestriction = e.target.ageRestriction.value;
+    // const fee = e.target.fee.value;
+    // const validity = e.target.validity.value;
+    // const applicationMethod = e.target.applicationMethod.value;
+    const addVisa = {
+      countryImage: formData.get("countryImage"),
+      countryName: formData.get("countryName"),
+      visaType: formData.get("visaType"),
+      processingTime: formData.get("processingTime"),
+      requiredDocuments: selectedDocuments,
+      description: formData.get("description"),
+      ageRestriction: formData.get("ageRestriction"),
+      fee: formData.get("fee"),
+      validity: formData.get("validity"),
+      applicationMethod: formData.get("applicationMethod"),
+    };
+    console.log(addVisa);
+    e.target.reset();
+    setSelectedDocuments([]);
+
+    // send data to the server
+    fetch("http://localhost:5000/visa", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(addVisa),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.insertedId) {
+          toast.success("Visa added successfully!");
+        }
+      });
+  };
+
+  const handleDocumentChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedDocuments([...selectedDocuments, value]);
+    } else {
+      setSelectedDocuments(selectedDocuments.filter((doc) => doc !== value));
     }
   };
+
   return (
     <div className="p-4 max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center">Add Visa</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleAddVisa} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
             <label className="block text-sm font-medium text-gray-700">
@@ -49,8 +72,6 @@ const AddVisa = () => {
             <input
               type="text"
               name="countryImage"
-              value={formData.countryImage}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -63,8 +84,6 @@ const AddVisa = () => {
             <input
               type="text"
               name="countryName"
-              value={formData.countryName}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -76,8 +95,6 @@ const AddVisa = () => {
             </label>
             <select
               name="visaType"
-              value={formData.visaType}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             >
@@ -95,8 +112,6 @@ const AddVisa = () => {
             <input
               type="text"
               name="processingTime"
-              value={formData.processingTime}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -110,9 +125,8 @@ const AddVisa = () => {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  name="requiredDocuments"
                   value="Valid Passport"
-                  onChange={handleChange}
+                  onChange={handleDocumentChange}
                   className="mr-2"
                   required
                 />
@@ -121,9 +135,8 @@ const AddVisa = () => {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  name="requiredDocuments"
                   value="Visa Application Form"
-                  onChange={handleChange}
+                  onChange={handleDocumentChange}
                   className="mr-2"
                 />
                 Visa Application Form
@@ -131,12 +144,11 @@ const AddVisa = () => {
               <label className="flex items-center">
                 <input
                   type="checkbox"
-                  name="requiredDocuments"
-                  value="Recent Passport-Sized Photograph"
-                  onChange={handleChange}
+                  value="Resent Passport-Sized Photograph"
+                  onChange={handleDocumentChange}
                   className="mr-2"
                 />
-                Recent Passport-Sized Photograph
+                Resent Passport-Sized Photograph
               </label>
             </div>
           </div>
@@ -147,8 +159,6 @@ const AddVisa = () => {
             </label>
             <textarea
               name="description"
-              value={formData.description}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               rows="4"
               required
@@ -162,8 +172,6 @@ const AddVisa = () => {
             <input
               type="number"
               name="ageRestriction"
-              value={formData.ageRestriction}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -176,8 +184,6 @@ const AddVisa = () => {
             <input
               type="number"
               name="fee"
-              value={formData.fee}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -190,8 +196,6 @@ const AddVisa = () => {
             <input
               type="text"
               name="validity"
-              value={formData.validity}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -204,8 +208,6 @@ const AddVisa = () => {
             <input
               type="text"
               name="applicationMethod"
-              value={formData.applicationMethod}
-              onChange={handleChange}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               required
             />
@@ -214,7 +216,7 @@ const AddVisa = () => {
           <div>
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+              className="w-full cursor-pointer bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
             >
               Add Visa
             </button>
