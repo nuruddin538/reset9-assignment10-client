@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import ApplyVisaModal from "./ApplyVisaModal";
 
 const VisaDetails = () => {
   const visa = useLoaderData();

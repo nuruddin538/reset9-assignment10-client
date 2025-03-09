@@ -9,6 +9,7 @@ import MyAddVisa from "../pages/MyAddVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import NotFound from "../pages/NotFound";
 import VisaDetails from "../components/VisaDetails";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,8 @@ const router = createBrowserRouter([
       {
         path: "/all-visas",
         element: <AllVisa></AllVisa>,
+        loader: () =>
+          fetch("http://localhost:5000/visa").then((res) => res.json()),
       },
       {
         path: "/add-visa",
@@ -47,11 +50,16 @@ const router = createBrowserRouter([
       {
         path: "/my-added-visas",
         element: <MyAddVisa></MyAddVisa>,
-        loader: () => fetch("http://localhost:5000/visa"),
+        loader: () =>
+          fetch("http://localhost:5000/my-visas").then((res) => res.json()),
       },
       {
         path: "/my-visa-application",
         element: <MyVisaApplication></MyVisaApplication>,
+        loader: () =>
+          fetch("http://localhost:5000/my-applications").then((res) =>
+            res.json()
+          ),
       },
     ],
   },
