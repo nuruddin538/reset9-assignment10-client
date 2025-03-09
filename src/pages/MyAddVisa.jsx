@@ -34,6 +34,12 @@ const MyAddVisa = () => {
       }
     });
   };
+  const handleUpdateVisa = (updatedVisa) => {
+    setVisas(
+      visas.map((visa) => (visa._id === updatedVisa._id ? updatedVisa : visa))
+    );
+    setSelectedVisa(null); // Close the modal after update
+  };
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">My Added Visas</h1>
@@ -72,6 +78,7 @@ const MyAddVisa = () => {
         <UpdateVisaModal
           visa={selectedVisa}
           onClose={() => setSelectedVisa(null)}
+          onUpdateVisa={handleUpdateVisa} //Pass the update function
         />
       )}
     </div>
