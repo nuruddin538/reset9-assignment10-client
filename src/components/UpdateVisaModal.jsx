@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 const UpdateVisaModal = ({ visa, onClose, onUpdateVisa }) => {
   const [formData, setFormData] = useState({
-    country: visa.country,
+    countryName: visa.countryName,
     countryImage: visa.countryImage,
     visaType: visa.visaType,
     processingTime: visa.processingTime,
@@ -44,9 +44,9 @@ const UpdateVisaModal = ({ visa, onClose, onUpdateVisa }) => {
               <label className="block text-sm font-medium">Country</label>
               <input
                 type="text"
-                value={formData.country}
+                value={formData.countryName}
                 onChange={(e) =>
-                  setFormData({ ...formData, country: e.target.value })
+                  setFormData({ ...formData, countryName: e.target.value })
                 }
                 className="w-full p-2 border rounded"
                 required
@@ -137,13 +137,13 @@ const UpdateVisaModal = ({ visa, onClose, onUpdateVisa }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="mr-2 bg-gray-500 text-white px-4 py-2 rounded"
+                className="mr-2 bg-gray-500 cursor-pointer text-white px-4 py-2 rounded"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-green-500 text-white px-4 py-2 rounded"
+                className="bg-green-500 cursor-pointer text-white px-4 py-2 rounded"
               >
                 Update
               </button>
