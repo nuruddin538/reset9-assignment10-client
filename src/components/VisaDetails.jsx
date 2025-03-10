@@ -5,6 +5,7 @@ import ApplyVisaModal from "./ApplyVisaModal";
 const VisaDetails = () => {
   const visa = useLoaderData();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <div>
       <div className="p-6 flex justify-center">

@@ -22,15 +22,19 @@ const ApplyVisaModal = ({ visaId, onClose }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...formData, visaId }),
       });
-      if (response.ok) {
-        toast.success("Application submitted successfully!");
+
+      if (!response.ok) {
+        throw new Error("Failed to submit application.");
+      }
+      const data = await response.json();
+      if (data.success) {
+        toast.success("successfully added!");
         onClose();
       } else {
-        toast.error("Failed to submit application.");
+        toast.error(data.message || "Failed to submit application.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
-      console.error("Error submitting application:", error);
     }
   };
   return (
