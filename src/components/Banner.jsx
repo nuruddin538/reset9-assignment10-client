@@ -20,6 +20,7 @@ const Banner = ({ bgImage }) => {
           {bgImage.includes("banner3") && "Add a New Visa"}
           {bgImage.includes("banner4") && "My Added Visa"}
           {bgImage.includes("banner5") && "My Visa Applications"}
+          {bgImage.includes("banner6") && "Visa Details"}
         </h1>
         <p className="text-xl">
           {bgImage.includes("banner1") &&
@@ -29,6 +30,7 @@ const Banner = ({ bgImage }) => {
           {bgImage.includes("banner3") && "Add a new visa to our database."}
           {bgImage.includes("banner4") && "Manage your added visas."}
           {bgImage.includes("banner5") && "Track your visa applications."}
+          {bgImage.includes("banner6") && "Visit your visa Details."}
         </p>
       </div>
     </div>

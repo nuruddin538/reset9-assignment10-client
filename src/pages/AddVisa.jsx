@@ -8,16 +8,6 @@ const AddVisa = () => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-    // const countryImage = e.target.countryImage.value;
-    // const countryName = e.target.countryName.value;
-    // const visaType = e.target.visaType.value;
-    // const processingTime = e.target.processingTime.value;
-    // const requiredDocuments = e.target.requiredDocuments.value;
-    // const description = e.target.description.value;
-    // const ageRestriction = e.target.ageRestriction.value;
-    // const fee = e.target.fee.value;
-    // const validity = e.target.validity.value;
-    // const applicationMethod = e.target.applicationMethod.value;
     const addVisa = {
       countryImage: formData.get("countryImage"),
       countryName: formData.get("countryName"),

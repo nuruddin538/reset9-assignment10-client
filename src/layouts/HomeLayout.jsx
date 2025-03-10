@@ -20,9 +20,10 @@ const HomeLayout = () => {
     "/add-visa": "url('/images/banner3.jpg')",
     "/my-added-visas": "url('/images/banner4.jpg')",
     "/my-visa-application": "url('/images/banner5.jpg')",
+    "/visa": "url('/images/banner6.jpg')", //Fallback for visaDetails route
   };
   // Get the current route's background image
-  const bannerBgImage = bgImages[location.pathname] || "";
+  const bannerBgImage = bgImages[location.pathname] || bgImages["/visa"];
 
   return (
     <div>
