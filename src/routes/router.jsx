@@ -9,7 +9,6 @@ import MyAddVisa from "../pages/MyAddVisa";
 import MyVisaApplication from "../pages/MyVisaApplication";
 import NotFound from "../pages/NotFound";
 import VisaDetails from "../components/VisaDetails";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const router = createBrowserRouter([
   {
