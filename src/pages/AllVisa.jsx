@@ -1,15 +1,38 @@
+import { useState } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 
-const MyAddVisa = () => {
+const AllVisa = () => {
   const visas = useLoaderData();
+  const [filteredVisas, setFilteredVisas] = useState(visas);
+  const [selectedType, setSelectedType] = useState("all");
   // console.log(visas);
+
+  const handleFilter = (type) => {
+    setSelectedType(type);
+    setFilteredVisas(
+      type === "all" ? visas : visas.filter((visa) => visa.visaType === type)
+    );
+  };
   return (
     <div className="p-4">
       <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
         All Visas {visas.length}
       </h2>
+      <div className="mb-6 text-right">
+        <label className="mr-2">Filter by Visa Type:</label>
+        <select
+          value={selectedType}
+          onChange={(e) => handleFilter(e.target.value)}
+          className="p-1 border rounded"
+        >
+          <option value="all">All</option>
+          <option value="Tourist Visa">Tourist</option>
+          <option value="Business Visa">Business</option>
+          <option value="Student Visa">Student</option>
+        </select>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {visas.map((visa) => (
+        {filteredVisas.map((visa) => (
           <div
             key={visa._id}
             className="bg-white border border-gray-200 p-4 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
@@ -42,4 +65,4 @@ const MyAddVisa = () => {
   );
 };
 
-export default MyAddVisa;
+export default AllVisa;

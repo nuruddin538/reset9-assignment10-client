@@ -20,7 +20,7 @@ const AddVisa = () => {
       validity: formData.get("validity"),
       applicationMethod: formData.get("applicationMethod"),
     };
-    console.log(addVisa);
+    // console.log(addVisa);
     e.target.reset();
     setSelectedDocuments([]);
 
@@ -43,11 +43,14 @@ const AddVisa = () => {
 
   const handleDocumentChange = (e) => {
     const { value, checked } = e.target;
-    if (checked) {
-      setSelectedDocuments([...selectedDocuments, value]);
-    } else {
-      setSelectedDocuments(selectedDocuments.filter((doc) => doc !== value));
-    }
+    setSelectedDocuments((prevDocs) =>
+      checked ? [...prevDocs, value] : prevDocs.filter((doc) => doc !== value)
+    );
+    // if (checked) {
+    //   setSelectedDocuments([...selectedDocuments, value]);
+    // } else {
+    //   setSelectedDocuments(selectedDocuments.filter((doc) => doc !== value));
+    // }
   };
 
   return (
@@ -112,34 +115,21 @@ const AddVisa = () => {
               Required Documents:
             </label>
             <div className="mt-2 space-y-2">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Valid Passport"
-                  onChange={handleDocumentChange}
-                  className="mr-2"
-                  required
-                />
-                Valid Passport
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Visa Application Form"
-                  onChange={handleDocumentChange}
-                  className="mr-2"
-                />
-                Visa Application Form
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  value="Resent Passport-Sized Photograph"
-                  onChange={handleDocumentChange}
-                  className="mr-2"
-                />
-                Resent Passport-Sized Photograph
-              </label>
+              {[
+                "Valid Passport",
+                "Visa Application Form",
+                "Recent Passport-Sized Photograph",
+              ].map((doc) => (
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    value={doc}
+                    onChange={handleDocumentChange}
+                    className="mr-2"
+                  />
+                  {doc}
+                </label>
+              ))}
             </div>
           </div>
           {/* Description */}
