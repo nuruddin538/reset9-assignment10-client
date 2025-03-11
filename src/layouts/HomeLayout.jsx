@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { ToastContainer } from "react-toastify";
 import Banner from "../components/Banner";
 import Slider from "../components/Slider";
+import { useState } from "react";
 
 const HomeLayout = () => {
   const location = useLocation();
@@ -27,33 +28,35 @@ const HomeLayout = () => {
 
   return (
     <div>
-      <ToastContainer />
       <div>
-        <header>
-          <nav>
-            <Navbar></Navbar>
-            {/* Conditionally render Slider or Banner */}
-            {showBanner && (
-              <>
-                {location.pathname === "/" ? (
-                  <Slider />
-                ) : (
-                  <Banner bgImage={bannerBgImage} />
-                )}
-              </>
-            )}
-          </nav>
-        </header>
-      </div>
-      <div>
-        <main>
-          <Outlet></Outlet>
-        </main>
-      </div>
-      <div>
-        <footer>
-          <Footer></Footer>
-        </footer>
+        <ToastContainer />
+        <div>
+          <header>
+            <nav>
+              <Navbar></Navbar>
+              {/* Conditionally render Slider or Banner */}
+              {showBanner && (
+                <>
+                  {location.pathname === "/" ? (
+                    <Slider />
+                  ) : (
+                    <Banner bgImage={bannerBgImage} />
+                  )}
+                </>
+              )}
+            </nav>
+          </header>
+        </div>
+        <div>
+          <main>
+            <Outlet></Outlet>
+          </main>
+        </div>
+        <div>
+          <footer>
+            <Footer></Footer>
+          </footer>
+        </div>
       </div>
     </div>
   );

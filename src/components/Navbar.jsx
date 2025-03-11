@@ -2,15 +2,29 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/firebase.config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import visaLogo from "../assets/visa-logo.jpg";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
+
+  // Get theme from localStorage (default: light)
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [theme]);
 
   const handleLogout = () => {
     signOut(auth).then(() => {
@@ -22,13 +36,23 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleTheme = () => {
+    if (!isHomePage) return;
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
+
   return (
-    <nav className="bg-white shadow-md fixed w-full z-10">
+    <nav className="bg-white dark:bg-gray-900 shadow-md fixed w-full z-10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <Link to="/" className="text-xl font-bold text-gray-800">
+            <Link
+              to="/"
+              className="text-xl font-bold text-gray-800 dark:text-white"
+            >
               <div className="flex justify-center items-center">
                 <div>
                   <img
@@ -108,6 +132,15 @@ const Navbar = () => {
               </>
             )}
           </div>
+          {/* Dark Mode Button (Only for Home Page) */}
+          {isHomePage && (
+            <button
+              onClick={toggleTheme}
+              className="text-gray-800 cursor-pointer dark:text-white text-2xl focus:outline-none"
+            >
+              {theme === "light" ? <MdDarkMode /> : <MdLightMode />}
+            </button>
+          )}
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (

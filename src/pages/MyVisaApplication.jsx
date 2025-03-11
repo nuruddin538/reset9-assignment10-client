@@ -5,7 +5,17 @@ import Swal from "sweetalert2";
 
 const MyVisaApplication = () => {
   const applications = useLoaderData();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredApplications, setFilteredApplications] =
+    useState(applications);
   const [application, setApplication] = useState(applications);
+
+  const handleSearch = () => {
+    const filtered = applications.filter((app) =>
+      app.country.toLowerCase().inCludes(searchTerm.toLowerCase())
+    );
+    setFilteredApplications(filtered);
+  };
 
   const handleCancel = async (id) => {
     const result = await Swal.fire({
@@ -51,50 +61,69 @@ const MyVisaApplication = () => {
       {applications.length === 0 ? (
         <p>No visa applications found.</p>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
-          {application.map((app) => (
-            <div key={app._id} className="border p-4 rounded-lg shadow-md">
-              <img
-                src={app.countryImage}
-                alt={app.country}
-                className="w-full h-40 object-cover rounded"
+        <div>
+          <div>
+            <div className="mb-6 flex gap-2">
+              <input
+                type="text"
+                placeholder="Search by country..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="p-2 border rounded flex-grow"
               />
-              <h2 className="text-xl font-semibold">{app.countryName}</h2>
-              <p>
-                <strong>Processing Time: </strong>
-                {app.processingTime}
-              </p>
-              <p>
-                <strong>Fee: </strong>
-                {app.fee}
-              </p>
-              <p>
-                <strong>Validity: </strong>
-                {app.validity}
-              </p>
-              <p>
-                <strong>Application Method: </strong>
-                {app.applicationMethod}
-              </p>
-              <p>
-                <strong>Applied Data: </strong>
-                {app.appliedDate}
-              </p>
-              <p>
-                <strong>Name: </strong>
-                {app.firstName} {app.lastName}
-              </p>
-              <p>
-                <strong>Email: </strong>${app.email}
-              </p>
               <button
-                onClick={() => handleCancel(app._id)}
-                className="mt-4 cursor-pointer bg-red-500 text-white px-4 py-2 rounded"
+                onClick={handleSearch}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
               >
-                Cancel
+                Search
               </button>
             </div>
-          ))}
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {filteredApplications.map((app) => (
+              <div key={app._id} className="border p-4 rounded-lg shadow-md">
+                <img
+                  src={app.countryImage}
+                  alt={app.country}
+                  className="w-full h-40 object-cover rounded"
+                />
+                <h2 className="text-xl font-semibold">{app.countryName}</h2>
+                <p>
+                  <strong>Processing Time: </strong>
+                  {app.processingTime}
+                </p>
+                <p>
+                  <strong>Fee: </strong>
+                  {app.fee}
+                </p>
+                <p>
+                  <strong>Validity: </strong>
+                  {app.validity}
+                </p>
+                <p>
+                  <strong>Application Method: </strong>
+                  {app.applicationMethod}
+                </p>
+                <p>
+                  <strong>Applied Data: </strong>
+                  {app.appliedDate}
+                </p>
+                <p>
+                  <strong>Name: </strong>
+                  {app.firstName} {app.lastName}
+                </p>
+                <p>
+                  <strong>Email: </strong>${app.email}
+                </p>
+                <button
+                  onClick={() => handleCancel(app._id)}
+                  className="mt-4 cursor-pointer bg-red-500 text-white px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
