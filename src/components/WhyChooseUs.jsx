@@ -1,15 +1,18 @@
+import Lottie from "lottie-react";
+import checkMarkAnimation from "../assets/checkMark.json";
+import clockAnimation from "../assets/clock.json";
 const WhyChooseUs = () => {
   const features = [
     {
       id: 1,
-      icon: "✅",
+      animation: checkMarkAnimation,
       title: "Easy Application Process",
       description:
         "Apply for visas online with a simple and intuitive interface.",
     },
     {
       id: 2,
-      icon: "⏱️",
+      animation: clockAnimation,
       title: "Fast Processing",
       description: "Get your visa processed quickly with our efficient system.",
     },
@@ -37,6 +40,14 @@ const WhyChooseUs = () => {
               key={feature.id}
               className="text-center p-6 bg-gray-50 rounded-lg shadow-md"
             >
+              <div className="flex justify-center items-center">
+                <Lottie
+                  animationData={feature.animation}
+                  loop={true}
+                  autoplay={true}
+                  style={{ width: "100px", height: "60px" }}
+                ></Lottie>
+              </div>
               <div className="text-4xl mb-4">{feature.icon}</div>
               <div className="text-xl font-semibold mb-2">{feature.title}</div>
               <p className="text-gray-600">{feature.description}</p>
