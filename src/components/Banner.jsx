@@ -1,3 +1,5 @@
+import { Typewriter } from "react-simple-typewriter";
+
 const Banner = ({ bgImage }) => {
   return (
     <div
@@ -17,9 +19,29 @@ const Banner = ({ bgImage }) => {
         <h1 className="text-2xl md:text-4xl font-bold mb-4">
           {bgImage.includes("banner1") && "Welcome to VisaPortal"}
           {bgImage.includes("banner2") && "Explore All Visas"}
-          {bgImage.includes("banner3") && "Add a New Visa"}
+          {bgImage.includes("banner3") && (
+            <Typewriter
+              words={["Add a New Visa", "Add a Old Visa"]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              delaySpeed={100}
+              deleteSpeed={50}
+            />
+          )}
           {bgImage.includes("banner4") && "My Added Visa"}
-          {bgImage.includes("banner5") && "My Visa Applications"}
+          {bgImage.includes("banner5") && (
+            <Typewriter
+              words={["My Visa Applications", "Track Your Applications"]}
+              loop={true}
+              cursor
+              cursorStyle="|"
+              typeSpeed={70}
+              delaySpeed={100}
+              deleteSpeed={50}
+            />
+          )}
           {bgImage.includes("banner6") && "Visa Details"}
         </h1>
         <p className="text-xl">
